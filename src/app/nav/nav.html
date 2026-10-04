@@ -1,0 +1,9 @@
+<nav aria-label="Main navigation" class="px-3 py-5">
+  @for (item of navigation; track item) {
+    <button type="button" (click)="selectSection(item)" [attr.aria-current]="activeSection() === item ? 'page' : null" [class.active-nav]="activeSection() === item" class="mb-1 block w-full rounded-md px-4 py-2.5 text-left text-sm font-medium transition-colors hover:bg-slate-100">{{ item }}</button>
+  }
+  <h2 class="mt-7 px-4 text-[11px] font-semibold tracking-wider text-slate-400">SAVED REPORTS</h2>
+  @for (report of reports; track report) {
+    <button type="button" (click)="selectReport(report)" class="mt-1 block w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-100">{{ report }}</button>
+  }
+</nav>

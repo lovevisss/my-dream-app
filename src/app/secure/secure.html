@@ -1,0 +1,43 @@
+<div class="min-h-screen bg-white text-slate-800 md:flex">
+  <aside class="border-b border-slate-200 bg-slate-50 md:fixed md:inset-y-0 md:w-56 md:border-r md:border-b-0">
+        <app-nav></app-nav>
+  </aside>
+  <main class="min-w-0 flex-1 px-5 py-5 md:ml-56 md:px-8 md:py-6">
+    <header class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-5">
+      <h1 class="text-3xl font-medium tracking-tight">{{ activeSection() }}</h1>
+      <div class="flex items-center gap-2">
+        <div class="inline-flex overflow-hidden rounded-md border border-slate-300">
+          <button type="button" (click)="share()" class="px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50">Share</button>
+          <button type="button" (click)="exportCsv()" class="border-l border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50">Export</button>
+        </div>
+        <select aria-label="Report period" [value]="period()" (change)="changePeriod($event)" class="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-600">
+          <option>This week</option><option>This month</option><option>All time</option>
+        </select>
+      </div>
+    </header>
+    <section class="mt-6" aria-labelledby="list-title">
+      <div class="mb-3 flex flex-wrap items-end justify-between gap-2">
+        <h2 id="list-title" class="text-2xl font-medium tracking-tight">{{ sectionTitle() }}</h2>
+        <span class="text-xs text-slate-400">{{ visibleRows().length }} records · {{ period() }}</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[620px] border-collapse text-left text-sm">
+          <caption class="sr-only">{{ sectionTitle() }} — sample data</caption>
+          <thead class="border-y border-slate-200 text-xs font-semibold">
+          <tr><th scope="col" class="w-[13%] px-3 py-2.5">#</th><th scope="col" class="w-[19%] px-3 py-2.5">Header</th><th scope="col" class="w-[25%] px-3 py-2.5">Header</th><th scope="col" class="w-[23%] px-3 py-2.5">Header</th><th scope="col" class="px-3 py-2.5">Header</th></tr>
+          </thead>
+          <tbody>
+            @for (row of visibleRows(); track row.id) {
+              <tr class="odd:bg-slate-100/80 hover:bg-blue-50">
+                <td class="px-3 py-2 tabular-nums">{{ row.id }}</td>
+                @for (cell of row.cells; track $index) { <td class="px-3 py-2">{{ cell }}</td> }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4 text-xs text-slate-400">Sample data for dashboard preview.</p>
+    </section>
+    <p role="status" aria-live="polite" class="mt-4 text-sm text-blue-600">{{ message() }}</p>
+  </main>
+</div>
